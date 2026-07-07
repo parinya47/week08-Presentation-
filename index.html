@@ -1,11 +1,11 @@
 import os
 
-html_content = """<!DOCTYPE html>
+html_content_v2 = """<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>การพัฒนาซอฟต์แวร์ด้วยเทคโนโลยี Front-end: JavaScript</title>
+    <title>การพัฒนาซอฟต์แวร์ด้วยเทคโนโลยี Front-end: JavaScript v2</title>
     <style>
         * {
             box-sizing: border-box;
@@ -18,32 +18,35 @@ html_content = """<!DOCTYPE html>
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #f4f7f6;
-            color: #333;
-            padding-top: 60px; /* Space for fixed top menu */
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding-top: 60px; /* Space for fixed menu */
         }
 
-        /* Fixed Top Menu */
+        /* 1. Fixed Menu */
         .fixed-menu {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 60px;
-            background-color: #1e293b;
+            background-color: #0f172a;
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 24px;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .brand {
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .nav-links {
@@ -60,32 +63,34 @@ html_content = """<!DOCTYPE html>
         }
 
         .nav-item > a {
-            color: #fff;
+            color: #cbd5e1;
             text-decoration: none;
             padding: 0 20px;
             height: 100%;
             display: flex;
             align-items: center;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
         }
 
         .nav-item:hover > a {
-            background-color: #334155;
+            background-color: #1e293b;
+            color: #38bdf8;
         }
 
-        /* Mega Menu */
+        /* 2. Mega Menu */
         .mega-menu {
             position: absolute;
             top: 60px;
-            left: -200px;
-            width: 600px;
-            background-color: #fff;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            left: -150px;
+            width: 650px;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             display: none;
             grid-template-columns: repeat(3, 1fr);
-            padding: 20px;
+            padding: 24px;
             border-radius: 0 0 8px 8px;
-            border-top: 3px solid #38bdf8;
+            border-top: 4px solid #38bdf8;
             z-index: 999;
         }
 
@@ -94,11 +99,12 @@ html_content = """<!DOCTYPE html>
         }
 
         .mega-col h4 {
-            color: #1e293b;
-            margin-bottom: 10px;
-            font-size: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 5px;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 6px;
+            font-weight: 700;
         }
 
         .mega-col ul {
@@ -108,29 +114,39 @@ html_content = """<!DOCTYPE html>
         .mega-col ul li a {
             color: #64748b;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             display: block;
-            padding: 5px 0;
+            padding: 6px 0;
             transition: color 0.2s;
         }
 
         .mega-col ul li a:hover {
             color: #38bdf8;
+            padding-left: 4px;
         }
 
-        /* Main Layout */
+        /* Layout Container */
         .main-container {
             display: flex;
             flex: 1;
         }
 
-        /* Sidebar with Icons */
+        /* 3. Sidebar with Icons */
         .sidebar {
-            width: 260px;
-            background-color: #0f172a;
+            width: 280px;
+            background-color: #1e293b;
             color: #94a3b8;
-            padding: 20px 0;
-            transition: all 0.3s;
+            padding: 24px 0;
+            border-right: 1px solid #334155;
+        }
+
+        .sidebar-title {
+            padding: 0 24px 16px 24px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            font-weight: 700;
         }
 
         .sidebar ul {
@@ -140,323 +156,500 @@ html_content = """<!DOCTYPE html>
         .sidebar ul li a {
             display: flex;
             align-items: center;
-            padding: 12px 20px;
-            color: #94a3b8;
+            padding: 14px 24px;
+            color: #cbd5e1;
             text-decoration: none;
             transition: all 0.3s;
             font-size: 0.95rem;
+            font-weight: 500;
         }
 
         .sidebar ul li a:hover, .sidebar ul li.active a {
-            background-color: #1e293b;
-            color: #fff;
+            background-color: #0f172a;
+            color: #38bdf8;
             border-left: 4px solid #38bdf8;
         }
 
-        .sidebar ul li a .icon {
-            margin-right: 15px;
+        .sidebar ul li a .sidebar-icon {
+            margin-right: 16px;
             font-size: 1.2rem;
-            width: 20px;
+            width: 24px;
             text-align: center;
+            color: #38bdf8;
         }
 
         /* Content Area */
         .content {
             flex: 1;
             padding: 40px;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        .card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            border-left: 5px solid #1e293b;
+        /* 4. Slideshow / Carousel */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        .card.accent {
-            border-left-color: #38bdf8;
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            color: #fff;
+            transition: opacity 0.6s ease-in-out;
+            z-index: 1;
         }
 
-        h1 {
-            color: #1e293b;
-            margin-bottom: 10px;
-            font-size: 2rem;
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
         }
 
-        h2 {
-            color: #0f172a;
+        .slide h2 {
+            font-size: 2.2rem;
+            color: #38bdf8;
             margin-bottom: 15px;
-            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .slide p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
             display: flex;
             align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-btn:hover {
+            background-color: #38bdf8;
+        }
+
+        .carousel-btn.prev { left: 20px; }
+        .carousel-btn.next { right: 20px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
             gap: 10px;
+            z-index: 10;
         }
 
-        h3 {
-            color: #334155;
-            margin: 20px 0 10px 0;
-            font-size: 1.2rem;
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        p {
-            line-height: 1.7;
+        .dot.active {
+            background-color: #38bdf8;
+            width: 24px;
+            border-radius: 5px;
+        }
+
+        /* Content Blocks */
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            margin-bottom: 35px;
+            border-top: 4px solid #e2e8f0;
+        }
+
+        .card.accent-blue { border-top-color: #38bdf8; }
+        .card.accent-indigo { border-top-color: #6366f1; }
+        .card.accent-slate { border-top-color: #0f172a; }
+
+        .section-title {
+            color: #0f172a;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .subsection-title {
+            color: #1e293b;
+            margin: 24px 0 12px 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        p.text-content {
+            line-height: 1.75;
             color: #475569;
-            margin-bottom: 15px;
-            text-indent: 20px;
+            margin-bottom: 16px;
+            text-align: justify;
         }
 
         ul.content-list {
-            margin-left: 40px;
-            margin-bottom: 15px;
-            line-height: 1.7;
+            margin-left: 24px;
+            margin-bottom: 20px;
+            line-height: 1.75;
             color: #475569;
         }
 
         ul.content-list li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .author-box {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: #fff;
-            padding: 25px;
+        ul.content-list strong {
+            color: #0f172a;
+        }
+
+        .author-info-grid {
+            background: #f1f5f9;
             border-radius: 8px;
-            margin-bottom: 30px;
-            text-align: center;
+            padding: 20px;
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
-        .author-box h3 {
-            color: #38bdf8;
-            margin-top: 0;
+        .info-item {
+            font-size: 1rem;
+            color: #334155;
         }
 
-        .author-box p {
-            color: #cbd5e1;
-            text-indent: 0;
-            margin-bottom: 5px;
+        .info-item strong {
+            color: #0f172a;
         }
 
-        /* Code Blocks */
+        /* Code Styler */
         pre {
-            background-color: #1e293b;
+            background-color: #0f172a;
             color: #f8fafc;
-            padding: 15px;
-            border-radius: 6px;
+            padding: 18px;
+            border-radius: 8px;
             overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
             font-size: 0.9rem;
-            margin: 15px 0;
-            border-left: 4px solid #38bdf8;
+            margin: 16px 0;
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.06);
         }
 
         code {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #e2e8f0;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            background-color: #fee2e2;
+            color: #dc2626;
             padding: 2px 6px;
             border-radius: 4px;
-            color: #0f172a;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
         }
 
         pre code {
             background-color: transparent;
             padding: 0;
-            color: inherit;
+            color: #f8fafc;
         }
 
-        /* Footer */
+        /* 5. Footer */
         footer {
             background-color: #0f172a;
             color: #94a3b8;
             text-align: center;
-            padding: 20px;
+            padding: 24px;
             font-size: 0.9rem;
-            border-top: 1px solid #1e293b;
+            border-top: 1px solid #334155;
+            margin-top: auto;
         }
 
-        footer a {
+        footer strong {
             color: #38bdf8;
-            text-decoration: none;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .main-container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-            }
-            .mega-menu {
-                width: 100%;
-                left: 0;
-                grid-template-columns: 1fr;
-            }
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-container { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #334155; }
+            .mega-menu { width: 100%; left: 0; grid-template-columns: 1fr; gap: 20px; }
+            .author-info-grid { grid-template-columns: 1fr; }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <nav class="fixed-menu">
         <div class="brand">
-            <i class="fa-code-branch icon"></i> Front-end Tech
+            <i class="fa-solid fa-laptop-code"></i> Front-end Technology
         </div>
         <ul class="nav-links">
             <li class="nav-item"><a href="#home"><i class="fa-solid fa-house" style="margin-right:8px;"></i> หน้าแรก</a></li>
             <li class="nav-item">
-                <a href="#course"><i class="fa-solid fa-book" style="margin-right:8px;"></i> บทเรียน <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; margin-left:5px;"></i></a>
+                <a href="#course"><i class="fa-solid fa-book-open" style="margin-right:8px;"></i> บทเรียนคอร์ส <i class="fa-solid fa-caret-down" style="margin-left:6px; font-size:0.8rem;"></i></a>
+                
                 <div class="mega-menu">
                     <div class="mega-col">
-                        <h4>1. JavaScript คืออะไร</h4>
+                        <h4>1. ข้อมูลพื้นฐาน</h4>
                         <ul>
-                            <li><a href="#section1">ความหมาย</a></li>
+                            <li><a href="#section1_1">ความหมายของ JS</a></li>
                             <li><a href="#section1_2">ประวัติความเป็นมา</a></li>
-                            <li><a href="#section1_3">ความสำคัญ</a></li>
+                            <li><a href="#section1_3">ความสำคัญทางเทคโนโลยี</a></li>
                         </ul>
                     </div>
                     <div class="mega-col">
-                        <h4>2. การทำงาน</h4>
+                        <h4>2. สถาปัตยกรรมการทำงาน</h4>
                         <ul>
-                            <li><a href="#section2">Client-side</a></li>
-                            <li><a href="#section2_2">HTML & CSS</a></li>
-                            <li><a href="#section2_3">Web Browser</a></li>
+                            <li><a href="#section2_1">Client-side Computing</a></li>
+                            <li><a href="#section2_2">HTML, CSS & DOM</a></li>
+                            <li><a href="#section2_3">Web Browser Engine</a></li>
                         </ul>
                     </div>
                     <div class="mega-col">
-                        <h4>3. โครงสร้างพื้นฐาน</h4>
+                        <h4>3. โครงสร้าง Syntax</h4>
                         <ul>
-                            <li><a href="#section3">การเชื่อมไฟล์</a></li>
-                            <li><a href="#section3_2">การเขียนคำสั่ง</a></li>
-                            <li><a href="#section3_3">Comment</a></li>
+                            <li><a href="#section3_1">การเชื่อมโยงไฟล์สคริปต์</a></li>
+                            <li><a href="#section3_2">การเขียน Statements</a></li>
+                            <li><a href="#section3_3">การทำ Comment</a></li>
                         </ul>
                     </div>
                 </div>
             </li>
-            <li class="nav-item"><a href="#about"><i class="fa-solid fa-user" style="margin-right:8px;"></i> ผู้จัดทำ</a></li>
+            <li class="nav-item"><a href="#about"><i class="fa-solid fa-address-card" style="margin-right:8px;"></i> ผู้พัฒนา</a></li>
         </ul>
     </nav>
 
     <div class="main-container">
         <aside class="sidebar">
+            <div class="sidebar-title">เมนูนำทางบทเรียน</div>
             <ul>
-                <li class="active"><a href="#section1"><span class="icon"><i class="fa-solid fa-circle-question"></i></span> JavaScript คืออะไร</a></li>
-                <li><a href="#section2"><span class="icon"><i class="fa-solid fa-gear"></i></span> การทำงานของ JS</a></li>
-                <li><a href="#section3"><span class="icon"><i class="fa-solid fa-cubes"></i></span> โครงสร้างพื้นฐาน</a></li>
+                <li class="active"><a href="#section1"><span class="sidebar-icon"><i class="fa-solid fa-circle-info"></i></span> 1. JavaScript คืออะไร</a></li>
+                <li><a href="#section2"><span class="sidebar-icon"><i class="fa-solid fa-gears"></i></span> 2. การทำงานของระบบ</a></li>
+                <li><a href="#section3"><span class="sidebar-icon"><i class="fa-solid fa-code"></i></span> 3. โครงสร้างพื้นฐาน</a></li>
+                <li><a href="#about"><span class="sidebar-icon"><i class="fa-solid fa-user-tie"></i></span> ข้อมูลผู้จัดทำ</a></li>
             </ul>
         </aside>
 
-        <main class="content">
+        <main class="content" id="home">
             
-            <div class="author-box" id="about">
-                <h3>การพัฒนาซอฟต์แวร์ด้วยเทคโนโลยี Front-end</h3>
-                <h1>JavaScript</h1>
-                <p style="margin-top:15px;"><strong>จัดทำโดย:</strong> ปริญญา พันธุ์วงศา</p>
-                <p><strong>ระดับชั้น:</strong> ปวส.2/2</p>
-                <p><strong>แผนกวิชา:</strong> เทคโนโลยีสารสนเทศ (IT)</p>
-                <p><strong>สถานศึกษา:</strong> วิทยาลัยเทคนิคสว่างแดนดิน</p>
+            <div class="carousel-container">
+                <div class="slide active">
+                    <h2>JavaScript คอร์สพัฒนาเว็บยุคใหม่</h2>
+                    <p>ขับเคลื่อนเว็บไซต์และแอปพลิเคชันระดับโลกให้มีปฏิสัมพันธ์ (Interactive) และตอบสนองผู้ใช้งานอย่างชาญฉลาดในรูปแบบ Dynamic Web หน้าบ้านอย่างสมบูรณ์แบบ</p>
+                </div>
+                <div class="slide">
+                    <h2>Client-side Architecture</h2>
+                    <p>ประมวลผลความเร็วสูงที่ฝั่งผู้ใช้งานผ่าน JavaScript Engine ของเว็บบราวเซอร์ ลดภาระของเซิร์ฟเวอร์เพื่อให้ตอบสนองได้ทันท่วงทีแบบ Real-time</p>
+                </div>
+                <div class="slide">
+                    <h2>Universal Software Language</h2>
+                    <p>เรียนรู้ภาษาเดียวต่อยอดได้รอบด้าน ครอบคลุมทั้งแนวคิด Frontend (React, Vue) และเทคโนโลยีหลังบ้านชั้นนำผ่าน Node.js Ecosystem</p>
+                </div>
+                
+                <button class="carousel-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="carousel-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                
+                <div class="carousel-dots">
+                    <span class="dot active" onclick="currentSlide(0)"></span>
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                </div>
             </div>
 
-            <section id="section1" class="card accent">
-                <h2><i class="fa-solid fa-circle-question" style="color:#38bdf8;"></i> 1. JavaScript คืออะไร</h2>
+            <section id="about" class="card accent-slate">
+                <div class="section-title">
+                    <i class="fa-solid fa-id-card" style="color: #0f172a;"></i> ข้อมูลโครงการและผู้พัฒนาหลัก
+                </div>
+                <p class="text-content">เว็บไซต์นี้ได้รับการพัฒนาขึ้นเพื่อเป็นสื่อการเรียนรู้วิชาการพัฒนาซอฟต์แวร์ด้วยเทคโนโลยี Front-end โดยรวบรวมหลักการทำงานเบื้องต้น โครงสร้างไวยากรณ์ และความเข้าใจพื้นฐานเกี่ยวกับการพัฒนาเว็บไซต์แบบไดนามิกด้วยภาษา JavaScript</p>
                 
-                <h3 id="section1_1">ความหมาย</h3>
-                <p>JavaScript (JS) คือ ภาษาคอมพิวเตอร์ในรูปแบบสสคริปต์ (Scripting Language) ที่ถูกพัฒนาขึ้นมาเพื่อทำให้หน้าเว็บไซต์มีความเป็น Dynamic หรือมีการเคลื่อนไหว ตอบสนองกับผู้ใช้งานได้แบบเรียลไทม์ ต่างจากภาษา HTML และ CSS ที่ทำหน้าที่เพียงจัดโครงสร้างและหน้าตาที่หยุดนิ่ง (Static)</p>
+                <div class="author-info-grid">
+                    <div class="info-item"><strong>ผู้จัดทำ:</strong> ปริญญา พันธุ์วงศา</div>
+                    <div class="info-item"><strong>ระดับชั้น:</strong> ปวส.2/2</div>
+                    <div class="info-item"><strong>แผนกวิชา:</strong> เทคโนโลยีสารสนเทศ (IT)</div>
+                    <div class="info-item"><strong>สถานศึกษา:</strong> วิทยาลัยเทคนิคสว่างแดนดิน</div>
+                </div>
+            </section>
 
-                <h3 id="section1_2">ประวัติความเป็นมา</h3>
-                <p><strong>จุดเริ่มต้น (1995):</strong> JavaScript ถูกสร้างขึ้นโดย Brendan Eich ในปี ค.ศ. 1995 ขณะที่เขาทำงานให้กับบริษัท Netscape Communications โดยในตอนแรกเริ่มใช้ชื่อว่า Mocha จากนั้นเปลี่ยนเป็น LiveScript และสุดท้ายตกลงใช้ชื่อ JavaScript เพื่อเกาะกระแสความนิยมของภาษา Java ในยุคนั้น</p>
+            <section id="section1" class="card accent-blue">
+                <div class="section-title">
+                    <i class="fa-solid fa-lightbulb" style="color: #38bdf8;"></i> 1. JavaScript คืออะไร
+                </div>
+                
+                <h3 class="subsection-title" id="section1_1">ความหมาย</h3>
+                <p class="text-content"><strong>JavaScript (JS)</strong> คือ ภาษาคอมพิวเตอร์ในรูปแบบสคริปต์ (Scripting Language) ที่ถูกพัฒนาขึ้นมาเพื่อทำให้หน้าเว็บไซต์มีความเป็น Dynamic หรือมีการเคลื่อนไหว สามารถตอบสนองกับผู้ใช้งานได้แบบเรียลไทม์ ซึ่งแตกต่างจากภาษาโครงสร้างพื้นฐานอย่าง HTML และสไตล์ชีทอย่าง CSS ที่ทำหน้าที่เพียงจัดการโครงสร้างและรูปร่างหน้าตาที่หยุดนิ่งอยู่กับที่ (Static)</p>
+                <p class="text-content">ในปัจจุบัน ขอบเขตของภาษา JavaScript ไม่ได้จำกัดอยู่เฉพาะการทำงานภายในเว็บเบราว์เซอร์เท่านั้น แต่ยังแพร่หลายไปยังการพัฒนาแอปพลิเคชันฝั่งเซิร์ฟเวอร์ (Node.js), โมบายแอปพลิเคชัน ตลอดจนวงการเกมมิ่งและ AI อีกด้วย</p>
 
-                <h3 id="section1_3">ความสำคัญของ JavaScript</h3>
+                <h3 class="subsection-title" id="section1_2">ประวัติความเป็นมา</h3>
+                <p class="text-content"><strong>จุดเริ่มต้น (1995):</strong> ภาษา JavaScript ถูกสร้างขึ้นเป็นครั้งแรกโดย <strong>Brendan Eich</strong> ในปี ค.ศ. 1995 ระหว่างที่ปฏิบัติงานให้กับบริษัท Netscape Communications ในระยะแรกเริ่มพัฒนาโค้ดถูกเรียกขานภายใต้ชื่อโครงการว่า <em>Mocha</em> ก่อนปรับปรุงมาเป็น <em>LiveScript</em> และในท้ายที่สุดได้ตกลงใจเลือกใช้ชื่อ <em>JavaScript</em> เพื่อร่วมสร้างกระแสความสนใจและเกาะความนิยมของภาษา Java ที่โด่งดังมากในยุคนั้น (แม้ว่าในความเป็นจริงแล้ว ทั้งสองภาษาจะไม่มีโครงสร้างหรือความเกี่ยวข้องกันเลยก็ตาม)</p>
+                <p class="text-content"><strong>มาตรฐาน ECMAScript:</strong> เพื่อขจัดความสับสนและวางรากฐานของอุตสาหกรรมไอทีให้มีมาตรฐานเดียวกัน องค์กร ECMA International จึงเข้ามาทำหน้าที่ดูแลและกำหนดมาตรฐานกลางตั้งแต่ปี ค.ศ. 1997 รู้จักกันในนาม <strong>ECMAScript (ES)</strong> โดยหมุดหมายสำคัญที่สุดคือการเปิดตัวมาตรฐาน <strong>ES6 (ES2015)</strong> ที่นำพาฟีเจอร์อันทันสมัย ยืดหยุ่น และทรงพลังมาสู่ระบบนิเวศน์จาวาสคริปต์จนถึงปัจจุบัน</p>
+
+                <h3 class="subsection-title" id="section1_3">ความสำคัญของ JavaScript</h3>
                 <ul class="content-list">
-                    <li><strong>เป็นหัวใจของเว็บยุคใหม่:</strong> เว็บไซต์ระดับโลกอย่าง Facebook, YouTube หรือ Google ล้วนขับเคลื่อนด้วย JavaScript เพื่อให้ผู้ใช้สามารถกดไลก์ คอมเมนต์ หรือโหลดข้อมูลใหม่ได้โดยไม่ต้องกด Refresh หน้าเว็บ</li>
-                    <li><strong>เรียนรู้ครั้งเดียว เขียนได้ทุกอย่าง (Universal Language):</strong> ด้วยการมาของ Node.js ทำให้เหล่านักพัฒนาสามารถใช้ JavaScript เขียนได้ทั้งฝั่งหน้าบ้าน (Frontend) และหลังบ้าน (Backend) รวมถึงทำแอปพลิเคชันบนมือถือ (React Native) ได้อีกด้วย</li>
-                    <li><strong>Ecosystem ที่แข็งแกร่ง:</strong> มี Library และ Framework ยอดนิยมมากมาย เช่น React, Vue, และ Angular ที่ช่วยให้การพัฒนาซอฟต์แวร์รวดเร็วและมีประสิทธิภาพ</li>
+                    <li><strong>หัวใจหลักของ Web Applications ยุคปัจจุบัน:</strong> แพลตฟอร์มระดับโลก เช่น Facebook, YouTube หรือ Google ขับเคลื่อนกลไกหลังบ้านและหน้าบ้านด้วย JavaScript เพื่อให้ผู้ใช้งานส่งคำสั่ง กดไลก์ คอมเมนต์ หรือดึงข้อมูลใหม่มาแสดงผลได้ทันทีโดยไม่ต้อง Refresh หน้าเว็บใหม่ทั้งหมด</li>
+                    <li><strong>Universal Language (เรียนรู้ครั้งเดียว เขียนได้ทุกแพลตฟอร์ม):</strong> การกำเนิดขึ้นของ Node.js ช่วยเชื่อมโยงให้นักพัฒนาสามารถเขียนโค้ดได้ทั้งระบบหน้าบ้าน (Frontend) และระบบควบคุมหลังบ้าน (Backend) รวมถึงโมบายแอปพลิเคชันแบบ Cross-platform (เช่น React Native)</li>
+                    <li><strong>Ecosystem และคอมมูนิตี้ที่แข็งแกร่ง:</strong> มีคลังเครื่องมือหรือเฟรมเวิร์กยอดนิยมจำนวนมาก เช่น React, Vue, และ Angular ที่เข้ามาช่วยจัดการสถาปัตยกรรมซอฟต์แวร์ให้เสร็จสมบูรณ์ได้อย่างรวดเร็วและมีประสิทธิภาพสูง</li>
                 </ul>
             </section>
 
-            <section id="section2" class="card">
-                <h2><i class="fa-solid fa-gear"></i> 2. การทำงานของ JavaScript</h2>
+            <section id="section2" class="card accent-indigo">
+                <div class="section-title">
+                    <i class="fa-solid fa-network-wired" style="color: #6366f1;"></i> 2. การทำงานของ JavaScript
+                </div>
                 
-                <h3 id="section2_1">Client-side</h3>
-                <p>การทำงานของ JavaScript ส่วนใหญ่จะเป็นแบบ Client-side หมายความว่าตัวโค้ดจะถูกดาวน์โหลดจากเซิร์ฟเวอร์มาพร้อมกับหน้าเว็บ และมาประมวลผลที่เครื่องของผู้ใช้งาน (Client) โดยอาศัยเว็บเบราว์เซอร์ ข้อดีคือช่วยลดภาระการทำงานของเซิร์ฟเวอร์ และทำให้การตอบสนองต่อผู้ใช้งานทำได้อย่างรวดเร็วฉับไว</p>
+                <h3 class="subsection-title" id="section2_1">Client-side Computing</h3>
+                <p class="text-content">การทำงานของสคริปต์ JavaScript ส่วนใหญ่จะทำหน้าที่ในลักษณะ <strong>Client-side</strong> หมายถึง ชุดโค้ดคำสั่งจะถูกส่งพ่วงและดาวน์โหลดจากเว็บเซิร์ฟเวอร์มาสู่เครื่องคอมพิวเตอร์หรือสมาร์ทโฟนของผู้ใช้งานโดยตรง และเริ่มต้น **ประมวลผลภายในอุปกรณ์ปลายทาง (Client)** ด้วยเว็บเบราว์เซอร์ วิธีการดังกล่าวมีข้อดีอย่างยิ่งในการช่วยลดภาระการประมวลผลและการใช้ทรัพยากรบนเซิร์ฟเวอร์หลัก ส่งผลให้หน้าเว็บประมวลผลผลลัพธ์ได้อย่างรวดเร็วและไม่หน่วง</p>
 
-                <h3 id="section2_2">การทำงานร่วมกับ HTML และ CSS</h3>
-                <p>JavaScript จะเข้าไปควบคุม HTML และ CSS ผ่านสิ่งที่เรียกว่า DOM (Document Object Model) ทำให้เราสามารถสั่งให้ข้อความเปลี่ยนสี (เปลี่ยน CSS) หรือสั่งให้ปุ่มกดแล้วมีกล่องข้อความเด้งขึ้นมา (เปลี่ยน HTML) ได้</p>
+                <h3 class="subsection-title" id="section2_2">การทำงานร่วมกับ HTML และ CSS</h3>
+                <p class="text-content">เพื่อให้เกิดความเข้าใจที่ชัดเจน นักพัฒนาเว็บมักนิยมเปรียบเทียบการสร้างเว็บเพจเสมือนการปลูกสร้างอาคารบ้านเรือน:</p>
+                <ul class="content-list">
+                    <li><strong>HTML:</strong> เปรียบเสมือน โครงสร้างดิบของบ้าน (เสาเข็ม คานอิฐ ผนังคอนกรีตปูนเปลือยที่ยังไม่มีสีสัน)</li>
+                    <li><strong>CSS:</strong> เปรียบเสมือน สถาปัตยกรรมการตกแต่ง (การลงสีห้อง ติดวอลเปเปอร์ จัดวางตู้เตียงผ้าม่านให้สวยงาม)</li>
+                    <li><strong>JavaScript:</strong> เปรียบเสมือน ระบบกลไกและระบบอัจฉริยะในบ้าน (ระบบเซนเซอร์เปิดไฟอัตโนมัติเมื่อก้าวเดิน, ประตูเลื่อนไฟฟ้า, ระบบลิฟต์โดยสาร)</li>
+                </ul>
+                <p class="text-content">ภาษา JavaScript จะผสานการทำงานเพื่อควบคุมและปรับเปลี่ยนเนื้อหา HTML และสไตล์ CSS ผ่านกลไกส่วนกลางที่เบราว์เซอร์สร้างขึ้นที่เรียกว่า <strong>DOM (Document Object Model)</strong> ตัวอย่างเช่น การเขียนสคริปต์สั่งให้ข้อความเกิดการเปลี่ยนสีเมื่อคลิก หรือทำให้ปุ่มแสดงหน้าต่างแจ้งเตือน (Modal) เด้งแสดงผลขึ้นมา</p>
 
-                <h3 id="section2_3">การประมวลผลผ่าน Web Browser</h3>
-                <p>ภายในเว็บเบราว์เซอร์ (เช่น Google Chrome, Microsoft Edge, Safari) จะมีส่วนที่เรียกว่า JavaScript Engine (เช่น engine V8 ของ Chrome หรือ JavaScriptCore ของ Safari) ทำหน้าที่อ่านซอร์สโค้ด JavaScript ที่เราเขียน จากนั้นแปลงเป็นภาษาเครื่อง (Machine Code) ที่คอมพิวเตอร์เข้าใจได้อย่างรวดเร็วผ่านกระบวนการที่เรียกว่า JIT (Just-In-Time) Compilation ทำให้หน้าเว็บสามารถทำงานได้อย่างลื่นไหล</p>
+                <h3 class="subsection-title" id="section2_3">การประมวลผลผ่าน Web Browser Engine</h3>
+                <p class="text-content">ภายในโปรแกรมเว็บเบราว์เซอร์ชั้นนำ (เช่น Google Chrome, Microsoft Edge, Safari) จะประกอบด้วยเทคโนโลยีหัวใจหลักที่เรียกว่า <strong>JavaScript Engine</strong> (ตัวอย่างเช่น Engine <em>V8</em> ของค่าย Chrome/Edge หรือ <em>JavaScriptCore</em> ของค่าย Apple Safari) ทำหน้าที่คอยอ่าน Source Code ที่เราเขียนขึ้น จากนั้นนำไปตีความและแปลงสภาพเป็นภาษาเครื่อง (Machine Code) ที่หน่วยประมวลผลฮาร์ดแวร์เข้าใจโดยตรงอย่างมีประสิทธิภาพ ผ่านเทคนิคการคอมไพล์แบบ Just-In-Time (JIT) Compilation</p>
             </section>
 
-            <section id="section3" class="card">
-                <h2><i class="fa-solid fa-cubes"></i> 3. โครงสร้างพื้นฐานของ JavaScript</h2>
+            <section id="section3" class="card accent-slate">
+                <div class="section-title">
+                    <i class="fa-solid fa-square-rss" style="color: #0f172a;"></i> 3. โครงสร้างพื้นฐานของ JavaScript
+                </div>
                 
-                <h3 id="section3_1">การเชื่อมไฟล์ JavaScript</h3>
-                <p>เราสามารถใส่ JavaScript เข้าไปในโปรเจกต์เว็บได้ 2 วิธีหลักๆ ดังนี้:</p>
+                <h3 class="subsection-title" id="section3_1">การเชื่อมไฟล์ JavaScript เข้าสู่โปรเจกต์</h3>
+                <p class="text-content">ในการพัฒนาเว็บเพจ เราสามารถนำเข้าชุดคำสั่งสคริปต์ JavaScript เข้าไปทำงานร่วมกับเอกสารเว็บได้ 2 แนวทางหลัก:</p>
                 
-                <p><strong>1. เขียนแบบภายใน (Internal JavaScript):</strong> เขียนภายในแท็ก <code>&lt;script&gt;</code> ในไฟล์ HTML โดยตรง</p>
+                <p class="text-content"><strong>1. การเขียนโค้ดภายในตัวเอกสาร (Internal JavaScript):</strong> เป็นการฝังชุดคำสั่งไว้ภายใต้แท็ก <code>&lt;script&gt;</code> ในหน้าไฟล์ HTML นั้นๆ โดยตรง เหมาะสมกับสคริปต์ขนาดสั้นที่ไม่ซับซ้อน</p>
                 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
-    &lt;h1&gt;ยินดีต้อนรับ&lt;/h1&gt;
+    &lt;h1&gt;หน้าเว็บทดสอบภายใน&lt;/h1&gt;
+    
     &lt;script&gt;
-        console.log("Hello from Internal Script!");
+        console.log("ยินดีต้อนรับสู่ Internal Script!");
     &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-                <p><strong>2. เขียนแบบภายนอก (External JavaScript):</strong> แยกโค้ด JavaScript ไปไว้ในไฟล์ต่างหาก (นามสกุล .js) แล้วเชื่อมเข้ามาใน HTML วิธีนี้เป็นวิธีมาตรฐานที่แนะนำเพราะช่วยให้โค้ดเป็นระเบียบ</p>
-                <pre><code>&lt;!-- index.html --&gt;
+                <p class="text-content"><strong>2. การเขียนแยกไฟล์ภายนอก (External JavaScript):</strong> เป็นรูปแบบมาตรฐานสากลที่แนะนำ โดยแยกโค้ดสคริปต์ไปเก็บไว้ในไฟล์เฉพาะตัวที่มีนามสกุล <code>.js</code> แล้วทำการเรียกเชื่อมโยงเข้ามาใน HTML ผ่านแอตทริบิวต์ <code>src</code> ช่วยให้การจัดการซอร์สโค้ดเป็นระบบและนำกลับมาใช้ซ้ำในหน้าอื่นๆ ได้ง่าย</p>
+                <pre><code>&lt;!-- โครงสร้างภายในเอกสาร index.html --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
-    &lt;script src="script.js" defer&gt;&lt;/script&gt;
-</head>
-<body>
-    <h1>ยินดีต้อนรับ</h1>
-</body>
-</html></code></pre>
+    &lt;meta charset="UTF-8"&gt;
+    &lt;script src="main-app.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;โครงสร้างหน้าเว็บหลัก&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 
-                <h3 id="section3_2">การเขียนคำสั่ง (Statements)</h3>
-                <p>คำสั่งใน JavaScript คือคำสั่งที่บอกให้คอมพิวเตอร์ทำงานบางอย่าง โดยแต่ละคำสั่งมักจะจบด้วยเครื่องหมาย Semicolon ( ; ) (ใน JavaScript ยุคใหม่สามารถละเว้นได้ แต่การใส่ไว้จะช่วยลดข้อผิดพลาดในบางกรณี)</p>
-                <p>ตัวอย่างการเขียนคำสั่งพื้นฐาน:</p>
+                <h3 class="subsection-title" id="section3_2">การเขียนสเตตเมนต์คำสั่ง (Statements)</h3>
+                <p class="text-content">คำสั่งหรือสเตตเมนต์ใน JavaScript คือข้อความคำสั่งที่เขียนระบุขึ้นเพื่อให้คอมพิวเตอร์ประมวลผลพฤติกรรมบางประการ โดยตามหลักไวยากรณ์สากล แต่ละชุดคำสั่งมักจะจบประโยคด้วยเครื่องหมาย <strong>Semicolon ( ; )</strong> (แม้ว่าในปัจจุบัน ตัวคอมไพเลอร์ยุคใหม่จะสามารถอนุโลมให้ละเว้นการใส่ได้ แต่การเขียนปิดท้ายด้วยเซมิโคลอนจะช่วยป้องกันความสับสนและบั๊กที่อาจเกิดขึ้นจากการตีความโค้ดผิดพลาด)</p>
+                <p class="text-content">ตัวอย่างโครงสร้างคำสั่งพวกรหัสพื้นฐาน:</p>
                 <ul class="content-list">
-                    <li>การประกาศตัวแปร: <code>let name = "John";</code></li>
-                    <li>การแสดงผลบนหน้าจอคอนโซล: <code>console.log("สวัสดีคุณ " + name);</code></li>
-                    <li>การคำนวณ: <code>let total = 10 + 20;</code></li>
+                    <li><strong>การประกาศสร้างตัวแปรเพื่อเก็บข้อมูล:</strong> <code>let developerName = "ปริญญา";</code></li>
+                    <li><strong>การส่งค่าออกไปแสดงผลในหน้าต่างตรวจสอบ:</strong> <code>console.log("ชื่อผู้พัฒนา: " + developerName);</code></li>
+                    <li><strong>การประมวลผลเชิงคณิตศาสตร์:</strong> <code>let summaryResult = 50 + 150;</code></li>
                 </ul>
 
-                <h3 id="section3_3">Comment (คำอธิบายโค้ด)</h3>
-                <p>Comment คือส่วนของข้อความที่เราเขียนไว้เพื่ออธิบายโค้ดให้ตัวเองหรือคนในทีมอ่าน โดยที่ JavaScript Engine จะข้ามการประมวลผลในส่วนนี้ไป (โค้ดไม่ทำงาน) มี 2 แบบคือ:</p>
+                <h3 class="subsection-title" id="section3_3">การคอมเมนต์อธิบายรหัสต้นฉบับ (Comment)</h3>
+                <p class="text-content">Comment คือคำอธิบายหรือบันทึกข้อความที่เราพิมพ์แทรกไว้ในหน้าต่างซอร์สโค้ดเพื่อชี้แจงรายละเอียด ฟังก์ชัน หรือวัตถุประสงค์ของโปรแกรมให้ตัวเราเองหรือโปรแกรมเมอร์ในทีมได้รับทราบ โดยตัวเบราว์เซอร์และ JavaScript Engine จะทำการ **ข้ามการประมวลผลคำสั่งในส่วนนี้ไปโดยสิ้นเชิง** มีรูปแบบหลัก 2 ประเภทคือ:</p>
                 
-                <p><strong>1. Comment แบบบรรทัดเดียว (Single-line Comment):</strong> ใช้เครื่องหมาย <code>//</code></p>
-                <pre><code>// นี่คือการประกาศตัวแปรเก็บอายุ
-let age = 25;</code></pre>
+                <p class="text-content"><strong>1. คอมเมนต์ประเภทบรรทัดเดียว (Single-line Comment):</strong> เริ่มต้นด้วยเครื่องหมายสแลชคู่ <code>//</code></p>
+                <pre><code>// บันทึก: ประกาศตัวแปรคงที่เพื่อกำหนดค่าอัตราภาษีมูลค่าเพิ่ม
+const vatRate = 0.07;</code></pre>
 
-                <p><strong>2. Comment แบบหลายบรรทัด (Multi-line Comment):</strong> ใช้เครื่องหมาย <code>/*</code> ปิดด้วย <code>*/</code></p>
+                <p class="text-content"><strong>2. คอมเมนต์ประเภทครอบคลุมหลายบรรทัด (Multi-line Comment):</strong> เริ่มต้นด้วยเครื่องหมาย <code>/*</code> และปิดท้ายกลุ่มข้อความด้วย <code>*/</code></p>
                 <pre><code>/*
-  ฟังก์ชันนี้สร้างขึ้นเพื่อ
-  คำนวณภาษีมูลค่าเพิ่ม (VAT 7%)
-  รับค่าเป็นจำนวนเงินสุทธิ
+  โปรแกรมฟังก์ชันย่อยชุดนี้
+  พัฒนาขึ้นโดย ปริญญา พันธุ์วงศา
+  วัตถุประสงค์: เพื่อคำนวณราคาสินค้าสุทธิหลังจากหักส่วนลดสะสม
 */
-let vat = amount * 0.07;</code></pre>
+let netPrice = totalPrice - rewardDiscount;</code></pre>
             </section>
         </main>
     </div>
 
     <footer>
-        <p>© 2026 การพัฒนาซอฟต์แวร์ด้วยเทคโนโลยี Front-end | ออกแบบระบบโดย แผนกเทคโนโลยีสารสนเทศ วิทยาลัยเทคนิคสว่างแดนดิน</p>
+        <p>© 2026 การพัฒนาซอฟต์แวร์ด้วยเทคโนโลยี Front-end | พัฒนาและดูแลระบบโดย <strong>แผนกวิชาเทคโนโลยีสารสนเทศ วิทยาลัยเทคนิคสว่างแดนดิน</strong></p>
     </footer>
 
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            if (index >= slides.length) currentSlideIndex = 0;
+            if (index < 0) currentSlideIndex = slides.length - 1;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function moveSlide(step) {
+            currentSlideIndex += step;
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+
+        // Auto Advance Slide every 5 seconds
+        setInterval(() => {
+            currentSlideIndex++;
+            showSlide(currentSlideIndex);
+        }, 5000);
+    </script>
 </body>
 </html>
 """
 
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
+# Saving the updated complete web code template as index-v2.html
+output_file_path = "index-v2.html"
+with open(output_file_path, "w", encoding="utf-8") as f:
+    f.write(html_content_v2)
 
-print("HTML template generated successfully.")
+print(f"File created: {output_file_path}")
